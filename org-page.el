@@ -136,6 +136,7 @@ perfectly manipulated by org-page."
   (op/git-init-repo repo-dir)
   (op/generate-readme repo-dir)
   (op/git-commit-changes repo-dir "initial commit")
+  (op/git-new-branch repo-dir op/repository-html-branch)
   (op/git-new-branch repo-dir op/repository-org-branch)
   (op/generate-index repo-dir)
   (op/git-commit-changes repo-dir "add source index.org")
