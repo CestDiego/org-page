@@ -134,10 +134,11 @@ perfectly manipulated by org-page."
    (list (read-directory-name
           "Specify a directory to become the repository: " nil nil nil)))
   (op/git-init-repo repo-dir)
+  (op/git-new-branch repo-dir op/repository-html-branch)
   (op/generate-readme repo-dir)
   (op/git-commit-changes repo-dir "initial commit")
-  (op/git-new-branch repo-dir op/repository-html-branch)
   (op/git-new-branch repo-dir op/repository-org-branch)
+  (op/git-change-branch repo-dir op/repository-org-branch)
   (op/generate-index repo-dir)
   (op/git-commit-changes repo-dir "add source index.org")
   (op/generate-about repo-dir)
