@@ -131,6 +131,9 @@ similar to `op/render-header'."
                             (or template "post.mustache"))))
    (or param-table
        (ht ("title" (or (op/read-org-option "TITLE") "Untitled"))
+           ("date" (fix-timestamp-string
+                    (or (op/read-org-option "DATE")
+                        (format-time-string "%Y-%m-%d"))))
            ("content" (cl-flet ((org-html-fontify-code
                                  (code lang)
                                  (when code (org-html-encode-plain-text code))))
