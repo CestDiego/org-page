@@ -31,7 +31,7 @@
 ;; 2) incremental publication (according to =git diff= command)
 ;; 3) category support
 ;; 4) tags support (auto generated)
-;; 5) RSS support (auto generated)
+;; 5) Atom support (auto generated)
 ;; 6) search engine support (auto generated)
 ;; 7) a beautiful theme
 ;; 8) theme customization support
@@ -220,7 +220,7 @@ the following parameters could be used:
     %d: to represent the day of creation date
 KEYWORDS: the keywords of this post, used by search engine
 TAGS: the tags of this post, should be separated by comma and space
-DESCRIPTION: the description of this post, it will be displayed in RSS feed
+DESCRIPTION: the description of this post, it will be displayed in Atom feed
 
 Note that this function does not verify the input parameters, it is users'
 responsibility to guarantee these parameters are valid."

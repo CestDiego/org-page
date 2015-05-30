@@ -73,7 +73,7 @@ deleted. PUB-ROOT-DIR is the root publication directory."
                all-list)
         (op/generate-default-about pub-root-dir))
       (op/update-category-index file-attr-list pub-root-dir)
-      (op/update-rss file-attr-list pub-root-dir)
+      (op/update-atom file-attr-list pub-root-dir)
       (op/update-tags file-attr-list pub-root-dir)
       (when op/organization
         (op/update-authors file-attr-list pub-root-dir)))))
@@ -675,8 +675,8 @@ TODO: improve this function."
           (concat author-dir "index.html") 'html-mode))
      author-alist)))
 
-(defun op/update-rss (file-attr-list pub-base-dir)
-  "Update RSS. FILE-ATTR-LIST is the list of all file attribute property lists.
+(defun op/update-atom (file-attr-list pub-base-dir)
+  "Update Atom. FILE-ATTR-LIST is the list of all file attribute property lists.
 PUB-BASE-DIR is the root publication directory."
   (let ((last-10-posts
          (-take 10 (--sort (>= 0 (compare-standard-date
@@ -692,7 +692,7 @@ PUB-BASE-DIR is the root publication directory."
                                      file-attr-list)))))
     (string-to-file
      (mustache-render
-      op/rss-template
+      op/atom-template
       (ht ("title" op/site-main-title)
           ("link" op/site-domain)
           ("description" op/site-sub-title)
@@ -702,7 +702,7 @@ PUB-BASE-DIR is the root publication directory."
                               ("item-description" (plist-get it :description))
                               ("item-update-date" (plist-get it :mod-date)))
                           last-10-posts))))
-     (concat pub-base-dir "rss.xml"))))
+     (concat pub-base-dir "atom.xml"))))
 
 
 (provide 'op-export)

@@ -181,29 +181,24 @@ default value is `op/get-file-category'."
 (defvar op/item-cache nil
   "The cache for general purpose.")
 
-(defconst op/rss-template "<?xml version=\"1.0\" encoding=\"utf-8\"?>
-<rss version=\"2.0\">
-  <channel>
-    <title>{{title}}</title>
-    <link>{{link}}</link>
-    <description>{{description}}</description>
-    <pubDate>{{date}}</pubDate>
-    <lastBuildDate>{{date}}</lastBuildDate>
-    <docs>http://www.rssboard.org/rss-specification</docs>
-    <generator>Org-page static site generator \
-(https://github.com/kelvinh/org-page)</generator>
-    {{#items}}
-    <item>
-      <title>{{item-title}}</title>
-      <link>{{item-link}}</link>
-      <description>{{item-description}}</description>
-      <pubDate>{{item-update-date}}</pubDate>
-      <guid>{{item-link}}</guid>
-    </item>
-    {{/items}}
-  </channel>
-</rss>"
-  "Template for RSS rendering.")
+(defconst op/atom-template "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<feed xmlns=\"http://www.w3.org/2005/Atom\">
+  <id>{{link}}</id>
+  <title>{{title}}</title>
+  <subtitle>{{description}}</subtitle>
+  <link href=\"{{link}}\"/>
+  <updated>{{date}}</updated>
+  {{#items}}
+  <entry>
+    <title>{{item-title}}</title>
+    <link>{{item-link}}</link>
+    <summary>{{item-description}}</summary>
+    <updated>{{item-update-date}}</updated>
+    <id>{{item-link}}</id>
+  </entry>
+  {{/items}}
+</feed>"
+  "Template for Atom rendering.")
 
 (defcustom op/html-creator-string
   (format "<a href=\"http://www.gnu.org/software/emacs/\">Emacs</a> %s\
