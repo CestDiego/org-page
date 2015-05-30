@@ -137,7 +137,8 @@ similar to `op/render-header'."
               (config (cdr (or (assoc category op/category-config-alist)
                                (assoc "blog" op/category-config-alist)))))
          (ht ("show-meta" (plist-get config :show-meta))
-             ("title" (or (op/read-org-option "TITLE") "Untitled"))
+             ("title" (or (op/get-org-exported-title (op/read-org-option "TITLE"))
+                          "Untitled"))
              ("date" (format-time-string "%b %d, %Y"
                                          (date-to-time
                                           (or (op/read-org-option "DATE")

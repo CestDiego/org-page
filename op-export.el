@@ -83,7 +83,7 @@ deleted. PUB-ROOT-DIR is the root publication directory."
 PUB-ROOT-DIR is the root directory of published files, if DO-PUB is t, the
 content of the buffer will be converted into html."
   (let* ((filename (buffer-file-name))
-         (attr-plist `(:title ,(or (op/read-org-option "TITLE")
+         (attr-plist `(:title ,(or (op/get-org-exported-title (op/read-org-option "TITLE"))
                                    "Untitled")
                               :date ,(format-time-string "%d %b %Y"
                                                          (date-to-time
@@ -188,6 +188,17 @@ will return \"this is title\" if OPTION is \"TITLE\""
       (goto-char (point-min))
       (when (re-search-forward match-regexp nil t)
         (match-string-no-properties 2 nil)))))
+
+(defun op/get-org-exported-title (title)
+  "Render the title and return what it would look like in raw HTML
+e.g:
+\" this is =title= \"
+Will return \" this is <code>title</code> \".
+When using mustache files remember to show it as {{{title}}}
+"
+  (let ((export-content (org-export-string-as (concat "#+TITLE: " title) 'html)))
+    (when (string-match "<h1 class=\\\"title\\\">\\(.*\\)</h1>" export-content)
+      (message (match-string 1 export-content)))))
 
 (defun op/generate-uri (default-uri-template creation-date title)
   "Generate URI of org file opened in current buffer. It will be firstly created
