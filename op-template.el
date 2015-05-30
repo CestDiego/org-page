@@ -101,7 +101,7 @@ render from a default hash table."
                         #'(lambda (cat)
                             (ht ("category-uri"
                                  (concat "/" (encode-string-to-url cat) "/"))
-                                ("category-name" (capitalize cat))))
+                                ("category-name" cat)))
                         (sort (remove-if
                                #'(lambda (cat)
                                    (or (string= cat "index")
