@@ -191,7 +191,7 @@ default value is `op/get-file-category'."
   {{#items}}
   <entry>
     <title>{{item-title}}</title>
-    <link>{{item-link}}</link>
+    <link href=\"{{item-link}}\"/>
     <summary>{{item-description}}</summary>
     <updated>{{item-update-date}}</updated>
     <id>{{item-link}}</id>
