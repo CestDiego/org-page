@@ -85,9 +85,10 @@ content of the buffer will be converted into html."
   (let* ((filename (buffer-file-name))
          (attr-plist `(:title ,(or (op/read-org-option "TITLE")
                                    "Untitled")
-                              :date ,(fix-timestamp-string
-                                      (or (op/read-org-option "DATE")
-                                          (format-time-string "%Y-%m-%d")))
+                              :date ,(format-time-string "%d %b %Y"
+                                                         (date-to-time
+                                                          (or (op/read-org-option "DATE")
+                                                              (format-time-string "%Y-%m-%d"))))
                               :mod-date ,(if (not filename)
                                              (format-time-string "%Y-%m-%d")
                                            (or (op/git-last-change-date

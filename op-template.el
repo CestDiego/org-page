@@ -130,14 +130,22 @@ similar to `op/render-header'."
     (file-to-string (concat (op/get-template-dir)
                             (or template "post.mustache"))))
    (or param-table
-       (ht ("title" (or (op/read-org-option "TITLE") "Untitled"))
-           ("date" (fix-timestamp-string
-                    (or (op/read-org-option "DATE")
-                        (format-time-string "%Y-%m-%d"))))
-           ("content" (cl-flet ((org-html-fontify-code
-                                 (code lang)
-                                 (when code (org-html-encode-plain-text code))))
-                        (org-export-as 'html nil nil t nil)))))))
+       (let* ((filename (buffer-file-name))
+              (category (funcall (or op/retrieve-category-function
+                                     op/get-file-category)
+                                 filename))
+              (config (cdr (or (assoc category op/category-config-alist)
+                               (assoc "blog" op/category-config-alist)))))
+         (ht ("show-meta" (plist-get config :show-meta))
+             ("title" (or (op/read-org-option "TITLE") "Untitled"))
+             ("date" (format-time-string "%b %d, %Y"
+                                         (date-to-time
+                                          (or (op/read-org-option "DATE")
+                                              (format-time-string "%Y-%m-%d")))))
+             ("content" (cl-flet ((org-html-fontify-code
+                                   (code lang)
+                                   (when code (org-html-encode-plain-text code))))
+                          (org-export-as 'html nil nil t nil))))))))
 
 (defun op/render-footer (&optional param-table)
   "Render the footer on each page. PARAM-TABLE is similar to
