@@ -702,7 +702,7 @@ PUB-BASE-DIR is the root publication directory."
                               ("item-description" (plist-get it :description))
                               ("item-update-date" (plist-get it :mod-date)))
                           last-10-posts))))
-     (expand-file-name pub-base-dir "atom.xml"))))
+     (expand-file-name "atom.xml" pub-base-dir))))
 
 
 (provide 'op-export)
